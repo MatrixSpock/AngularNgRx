@@ -11,12 +11,14 @@ export interface ProductState {
   showProductCode: boolean;
   currentProduct: Product;
   products: Product[];
+  error: string;
 }
 
 const initialState: ProductState = {
   showProductCode: true,
   currentProduct: null,
-  products: []
+  products: [],
+  error: ''
 }
 
 // Selector - pass in the name of the feature slice of state 'products'. This got defined in the product.module.ts => StoredModule.forFeature('products', productReducer)
@@ -33,6 +35,11 @@ export const getCurrentProduct = createSelector(
 export const getProducts = createSelector(
   getProductFeatureState,
   state => state.products
+);
+
+export const getError = createSelector(
+  getProductFeatureState,
+  state => state.error
 );
 
 export const productReducer = createReducer<ProductState>(
@@ -70,7 +77,15 @@ export const productReducer = createReducer<ProductState>(
   on(ProductActions.loadProductsSuccess, (state, data): ProductState => {
     return {
       ...state,
-      products: data.products
+      products: data.products,
+      error: ''
+    }
+  }),
+  on(ProductActions.loadProductsFailure, (state, data): ProductState => {
+    return {
+      ...state,
+      products: [],
+      error: data.error
     }
   })
 );
