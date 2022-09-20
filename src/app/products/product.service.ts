@@ -13,6 +13,7 @@ export class ProductService {
   private productsUrl = 'api/products';
   private products: Product[];
 
+
   /* Replaced By NgRx */
   // private selectedProductSource = new BehaviorSubject<Product | null>(null);
   // selectedProductChanges$ = this.selectedProductSource.asObservable();
