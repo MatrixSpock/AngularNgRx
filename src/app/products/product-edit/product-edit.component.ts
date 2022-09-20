@@ -154,7 +154,7 @@ export class ProductEditComponent implements OnInit {
         if (product.id === 0) {
           this.productService.createProduct(product).subscribe({
             /*New*/
-            next: p => this.store.dispatch(ProductActions.setCurrentProduct({product: p})),
+            next: p => this.store.dispatch(ProductActions.setCurrentProduct({currentProductId: p.id})),
             /*Original*/
             // next: p => this.productService.changeSelectedProduct(p),
             error: err => this.errorMessage = err
@@ -162,7 +162,7 @@ export class ProductEditComponent implements OnInit {
         } else {
           this.productService.updateProduct(product).subscribe({
             /*New*/
-            next: p => this.store.dispatch(ProductActions.setCurrentProduct({product: p})),
+            next: p => this.store.dispatch(ProductActions.setCurrentProduct({currentProductId: p.id})),
 
             /*Original*/
             // next: p => this.productService.changeSelectedProduct(p),
