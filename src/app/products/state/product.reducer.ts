@@ -114,6 +114,21 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       error: data.error
     }
+  }),
+  //JRI Deleting
+  on(ProductActions.deleteProductSuccess, (state, data): ProductState => {
+    return {
+      ...state,
+      products: state.products.filter(product => product.id !== data.productId),
+      currentProductId: null,
+      error: ''
+    }
+  }),
+  on(ProductActions.deleteProductFailure, (state, data): ProductState => {
+    return {
+      ...state,
+      error: data.error
+    }
   })
 
 );

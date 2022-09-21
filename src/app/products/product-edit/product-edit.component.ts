@@ -126,13 +126,7 @@ export class ProductEditComponent implements OnInit {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.productService.deleteProduct(product.id).subscribe({
-          /*New*/
-          next: () => this.store.dispatch(ProductActions.clearCurrentProduct()),
-          /*Original*/
-          // next: () => this.productService.changeSelectedProduct(null),
-          error: err => this.errorMessage = err
-        });
+        this.store.dispatch(ProductActions.deleteProductSuccess({ productId: product.id }));
       }
     } else {
       // No need to delete, it was never saved
