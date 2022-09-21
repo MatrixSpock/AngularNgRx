@@ -146,13 +146,7 @@ export class ProductEditComponent implements OnInit {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.productService.createProduct(product).subscribe({
-            /*New*/
-            next: p => this.store.dispatch(ProductActions.setCurrentProduct({ currentProductId: p.id })),
-            /*Original*/
-            // next: p => this.productService.changeSelectedProduct(p),
-            error: err => this.errorMessage = err
-          });
+          this.store.dispatch(ProductActions.createProduct({product}));
         } else {
           this.store.dispatch(ProductActions.updateProduct({ product }));
         }

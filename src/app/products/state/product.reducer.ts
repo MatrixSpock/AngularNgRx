@@ -2,6 +2,7 @@ import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/
 import { Product } from "../product";
 import * as AppState from '../../state/app.state'
 import * as ProductActions from './product.actions'
+import { Action } from "rxjs/internal/scheduler/Action";
 
 export interface State extends AppState.State {
   products: ProductState;
@@ -125,6 +126,21 @@ export const productReducer = createReducer<ProductState>(
     }
   }),
   on(ProductActions.deleteProductFailure, (state, data): ProductState => {
+    return {
+      ...state,
+      error: data.error
+    }
+  }),
+  //JRI Create Reducer
+  on(ProductActions.createProductSuccess, (state, data): ProductState => {
+    return {
+      ...state,
+      products: [...state.products, data.product],
+      currentProductId: data.product.id,
+      error: ''
+    }
+  }),
+  on(ProductActions.createProductFailure, (state, data): ProductState => {
     return {
       ...state,
       error: data.error

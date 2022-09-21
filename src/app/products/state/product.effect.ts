@@ -44,5 +44,27 @@ export class ProductEffects {
             ))
       )
   })
+  createProduct$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(ProductActions.createProduct),
+        concatMap(action =>
+          this.productService.createProduct(action.product).pipe(
+              map((product) => ProductActions.createProductSuccess({ product })),
+              catchError(error => of(ProductActions.createProductFailure({ error })))
+            ))
+      )
+  })
+
+  // loadProduct$ = createEffect(() => {
+  //   return this.actions$
+  //     .pipe(
+  //       ofType(ProductActions.loadProducts),
+  //       mergeMap(() => this.productService.getProducts().pipe(
+  //         map(products => ProductActions.loadProductsSuccess({ products })),
+  //         catchError(error => of(ProductActions.loadProductsFailure({ error })))
+  //       ))
+  //     )
+  // })
 
 }
