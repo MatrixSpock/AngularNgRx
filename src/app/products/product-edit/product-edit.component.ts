@@ -24,7 +24,6 @@ export class ProductEditComponent implements OnInit {
   productForm: FormGroup;
 
   product: Product | null;
-  // sub: Subscription;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -65,15 +64,10 @@ export class ProductEditComponent implements OnInit {
     });
 
     // Watch for changes to the currently selected product
-    /* New */
     this.product$ = this.store.select(getCurrentProduct).pipe(tap(
       currentProduct => this.displayProduct(currentProduct)
     ));
 
-    /* Original */
-    // this.sub = this.productService.selectedProductChanges$.subscribe(
-    //   currentProduct => this.displayProduct(currentProduct)
-    // );
 
     // Watch for value changes for validation
   this.productForm.valueChanges.subscribe(
@@ -81,9 +75,6 @@ export class ProductEditComponent implements OnInit {
     );
   }
 
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
 
   // Also validate on blur
   // Helpful if the user tabs through required fields
@@ -93,8 +84,6 @@ export class ProductEditComponent implements OnInit {
 
   displayProduct(product: Product | null): void {
     // Set the local product property
-    // this.product = product;
-
     if (product) {
       // Reset the form back to pristine
       this.productForm.reset();
@@ -129,10 +118,7 @@ export class ProductEditComponent implements OnInit {
       }
     } else {
       // No need to delete, it was never saved
-      /*New*/
       this.store.dispatch(ProductPageActions.clearCurrentProduct())
-      /*Original*/
-      // this.productService.changeSelectedProduct(null);
     }
   }
 
