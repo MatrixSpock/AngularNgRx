@@ -7,7 +7,7 @@ import { State } from '../state/app.state';
 
 import { AuthService } from './auth.service';
 import { getMaskUserName } from './state/login.reducer';
-import * as LoginActions from './state/login.actions'
+import * as LoginActions from './state/actions/login-page.actions'
 import { Observable } from 'rxjs';
 
 @Component({

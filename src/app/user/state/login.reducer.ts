@@ -1,7 +1,7 @@
 import { User } from '../user';
 
 import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
-import * as LoginActions from '../state/login.actions'
+import { LoginPageActions } from './actions';
 
 
 export interface LoginState {
@@ -28,7 +28,7 @@ export const getCurrentUser = createSelector(
 
 export const loginReducer = createReducer<LoginState>(
   initialState,
-  on(LoginActions.maskUserName, (state): LoginState => {
+  on(LoginPageActions.maskUserName, (state): LoginState => {
     console.log("masking user name. Logging state: ", JSON.stringify(state) );
     return {
       ...state,
