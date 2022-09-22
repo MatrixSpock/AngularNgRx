@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { Product } from '../product';
+
 import { Store } from '@ngrx/store';
 import { getCurrentProduct, getError, getProducts, getShowProductCode, State } from '../state';
+
 import { ProductPageActions } from '../state/actions'
 
 @Component({
@@ -34,5 +37,19 @@ export class ProductShellComponent implements OnInit {
 
   productSelected(product: Product): void {
     this.store.dispatch(ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
+  }
+  deleteProduct(product: Product): void {
+    this.store.dispatch(ProductPageActions.deleteProduct({ productId: product.id }));
+  }
+
+  clearProduct(): void {
+    this.store.dispatch(ProductPageActions.clearCurrentProduct());
+  }
+  saveProduct(product: Product): void {
+    this.store.dispatch(ProductPageActions.createProduct({ product }));
+  }
+
+  updateProduct(product: Product): void {
+    this.store.dispatch(ProductPageActions.updateProduct({ product }));
   }
 }
