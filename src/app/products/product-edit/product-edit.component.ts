@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-// import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -10,10 +11,8 @@ import { NumberValidators } from '../../shared/number.validator';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getCurrentProduct } from '../state/product.reducer'
-import * as ProductActions from '../state/product.actions'
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { State, getCurrentProduct } from '../state'
+import { ProductPageActions } from '../state/actions';
 
 @Component({
   selector: 'pm-product-edit',
@@ -77,7 +76,7 @@ export class ProductEditComponent implements OnInit {
     // );
 
     // Watch for value changes for validation
-    this.productForm.valueChanges.subscribe(
+  this.productForm.valueChanges.subscribe(
       () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
@@ -126,12 +125,12 @@ export class ProductEditComponent implements OnInit {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.store.dispatch(ProductActions.deleteProductSuccess({ productId: product.id }));
+        this.store.dispatch(ProductPageActions.deleteProduct({ productId: product.id }));
       }
     } else {
       // No need to delete, it was never saved
       /*New*/
-      this.store.dispatch(ProductActions.clearCurrentProduct())
+      this.store.dispatch(ProductPageActions.clearCurrentProduct())
       /*Original*/
       // this.productService.changeSelectedProduct(null);
     }
@@ -146,9 +145,9 @@ export class ProductEditComponent implements OnInit {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.store.dispatch(ProductActions.createProduct({product}));
+          this.store.dispatch(ProductPageActions.createProduct({product}));
         } else {
-          this.store.dispatch(ProductActions.updateProduct({ product }));
+          this.store.dispatch(ProductPageActions.updateProduct({ product }));
         }
       }
     }
