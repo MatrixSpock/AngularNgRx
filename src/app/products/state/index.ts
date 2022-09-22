@@ -1,8 +1,8 @@
 import { createFeatureSelector,  createSelector, on } from "@ngrx/store";
 import { Product } from "../product";
 import * as AppState from '../../state/app.state'
-import * as ProductActions from './product.actions'
 import { Action } from "rxjs/internal/scheduler/Action";
+import { ProductState } from "./product.reducer";
 
 export interface State extends AppState.State {
   products: ProductState;
